@@ -290,7 +290,7 @@ products+"\n"+
 "Celková cena: "+document.getElementById("total").innerText+" Kč";
 
 window.location.href=
-"mailto:zatopek.ondrej@kostka-skola.cz"+
+"mailto:app@kostka-skola.cz"+
 "?subject="+encodeURIComponent("Objednávka NextBuy")+
 "&body="+encodeURIComponent(body);
 
