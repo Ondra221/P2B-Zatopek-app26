@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NextBuy - Technologie na dosah ruky</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:linear-gradient(135deg,#2563eb,#1e40af);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.container{
+    background:white;
+    width:100%;
+    max-width:800px;
+    padding:35px;
+    border-radius:25px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.2);
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.logo-circle{
+    width:120px;
+    height:120px;
+    background:#2563eb;
+    color:white;
+    border-radius:50%;
+    display:inline-flex;
+    justify-content:center;
+    align-items:center;
+    font-size:52px;
+    box-shadow:0 10px 25px rgba(37,99,235,.4);
+}
+
+h1{
+    margin-top:15px;
+    color:#111827;
+}
+
+.slogan{
+    color:#6b7280;
+    margin-top:8px;
+}
+
+input{
+    width:100%;
+    padding:14px;
+    margin:8px 0;
+    border:1px solid #d1d5db;
+    border-radius:12px;
+    font-size:15px;
+}
+
+input:focus{
+    outline:none;
+    border-color:#2563eb;
+}
+
+.product{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px;
+    margin:12px 0;
+    background:#f9fafb;
+    border-radius:12px;
+}
+
+.controls button{
+    width:38px;
+    height:38px;
+    border:none;
+    background:#2563eb;
+    color:white;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:18px;
+}
+
+.controls button:hover{
+    background:#1d4ed8;
+}
+
+.controls span{
+    display:inline-block;
+    min-width:25px;
+    text-align:center;
+    font-weight:bold;
+    font-size:18px;
+}
+
+.summary{
+    text-align:center;
+    margin-top:25px;
+    padding:20px;
+    background:#eff6ff;
+    border-radius:12px;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.send{
+    width:100%;
+    padding:16px;
+    margin-top:20px;
+    border:none;
+    background:#2563eb;
+    color:white;
+    font-size:18px;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.send:hover{
+    background:#1d4ed8;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="logo">
+<div class="logo-circle">💻↗</div>
+<h1>NextBuy</h1>
+<div class="slogan">Technologie na dosah ruky</div>
+</div>
+
+<input type="text" id="name" placeholder="Jméno a příjmení">
+<input type="email" id="email" placeholder="E-mail">
+<input type="tel" id="phone" placeholder="Telefon">
+
+<div class="product">
+<div>🎧 Bezdrátová sluchátka (899 Kč)</div>
+<div class="controls">
+<button onclick="change('sluchatka',-1)">−</button>
+<span id="sluchatka">0</span>
+<button onclick="change('sluchatka',1)">+</button>
+</div>
+</div>
+
+<div class="product">
+<div>🔋 Powerbanka 20 000 mAh (699 Kč)</div>
+<div class="controls">
+<button onclick="change('powerbanka',-1)">−</button>
+<span id="powerbanka">0</span>
+<button onclick="change('powerbanka',1)">+</button>
+</div>
+</div>
+
+<div class="product">
+<div>🖱 RGB Herní myš (549 Kč)</div>
+<div class="controls">
+<button onclick="change('mys',-1)">−</button>
+<span id="mys">0</span>
+<button onclick="change('mys',1)">+</button>
+</div>
+</div>
+
+<div class="product">
+<div>🔊 Bluetooth reproduktor (1199 Kč)</div>
+<div class="controls">
+<button onclick="change('repro',-1)">−</button>
+<span id="repro">0</span>
+<button onclick="change('repro',1)">+</button>
+</div>
+</div>
+
+<div class="product">
+<div>⌨ Mechanická klávesnice (1499 Kč)</div>
+<div class="controls">
+<button onclick="change('klavesnice',-1)">−</button>
+<span id="klavesnice">0</span>
+<button onclick="change('klavesnice',1)">+</button>
+</div>
+</div>
+
+<div class="summary">
+Počet kusů: <span id="count">0</span><br>
+Celková cena: <span id="total">0</span> Kč
+</div>
+
+<button class="send" onclick="sendOrder()">
+ODESLAT OBJEDNÁVKU
+</button>
+
+</div>
+
+<script>
+
+function change(id,val){
+
+let el=document.getElementById(id);
+let count=parseInt(el.innerText);
+
+count+=val;
+
+if(count<0) count=0;
+
+el.innerText=count;
+
+calculate();
+}
+
+function calculate(){
+
+let sluchatka=parseInt(document.getElementById("sluchatka").innerText);
+let powerbanka=parseInt(document.getElementById("powerbanka").innerText);
+let mys=parseInt(document.getElementById("mys").innerText);
+let repro=parseInt(document.getElementById("repro").innerText);
+let klavesnice=parseInt(document.getElementById("klavesnice").innerText);
+
+let total=
+sluchatka*899+
+powerbanka*699+
+mys*549+
+repro*1199+
+klavesnice*1499;
+
+let count=
+sluchatka+
+powerbanka+
+mys+
+repro+
+klavesnice;
+
+document.getElementById("total").innerText=total;
+document.getElementById("count").innerText=count;
+}
+
+function sendOrder(){
+
+let name=document.getElementById("name").value.trim();
+let email=document.getElementById("email").value.trim();
+let phone=document.getElementById("phone").value.trim();
+
+if(name==="" || email==="" || phone===""){
+alert("Vyplňte všechny kontaktní údaje.");
+return;
+}
+
+if(parseInt(document.getElementById("count").innerText)===0){
+alert("Vyberte alespoň jeden produkt.");
+return;
+}
+
+let products="";
+
+if(document.getElementById("sluchatka").innerText!="0")
+products+="Sluchátka: "+document.getElementById("sluchatka").innerText+" ks\n";
+
+if(document.getElementById("powerbanka").innerText!="0")
+products+="Powerbanka: "+document.getElementById("powerbanka").innerText+" ks\n";
+
+if(document.getElementById("mys").innerText!="0")
+products+="Herní myš: "+document.getElementById("mys").innerText+" ks\n";
+
+if(document.getElementById("repro").innerText!="0")
+products+="Bluetooth reproduktor: "+document.getElementById("repro").innerText+" ks\n";
+
+if(document.getElementById("klavesnice").innerText!="0")
+products+="Mechanická klávesnice: "+document.getElementById("klavesnice").innerText+" ks\n";
+
+let body =
+"Jméno: "+name+"\n"+
+"Email: "+email+"\n"+
+"Telefon: "+phone+"\n\n"+
+"Objednané produkty:\n"+
+products+"\n"+
+"Počet kusů: "+document.getElementById("count").innerText+"\n"+
+"Celková cena: "+document.getElementById("total").innerText+" Kč";
+
+window.location.href=
+"mailto:zatopek.ondrej@kostka-skola.cz"+
+"?subject="+encodeURIComponent("Objednávka NextBuy")+
+"&body="+encodeURIComponent(body);
+
+setTimeout(()=>{
+alert("Objednávka byla připravena k odeslání.");
+},500);
+}
+
+</script>
+
+</body>
+</html>
