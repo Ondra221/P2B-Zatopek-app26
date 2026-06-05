@@ -246,7 +246,6 @@ klavesnice;
 document.getElementById("total").innerText=total;
 document.getElementById("count").innerText=count;
 }
-
 function sendOrder(){
 
 let name=document.getElementById("name").value.trim();
@@ -289,14 +288,10 @@ products+"\n"+
 "Počet kusů: "+document.getElementById("count").innerText+"\n"+
 "Celková cena: "+document.getElementById("total").innerText+" Kč";
 
-window.location.href=
-"mailto:app@kostka-skola.cz"+
-"?subject="+encodeURIComponent("Objednávka NextBuy")+
-"&body="+encodeURIComponent(body);
+window.open(
+`mailto:app@kostka-skola.cz?subject=${encodeURIComponent("Objednávka NextBuy")}&body=${encodeURIComponent(body)}`
+);
 
-setTimeout(()=>{
-alert("Objednávka byla připravena k odeslání.");
-},500);
 }
 
 </script>
